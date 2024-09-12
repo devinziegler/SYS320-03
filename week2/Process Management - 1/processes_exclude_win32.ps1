@@ -1,1 +1,0 @@
-﻿Get-CimInstance Win32_Process | Where-Object { $_.ExecutablePath -notlike 'system32'}
