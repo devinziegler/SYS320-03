@@ -24,8 +24,10 @@ $loginoutsTable += [pscustomobject]@{"Time" = $loginouts[$i].TimeGenerated; `
 return $loginoutsTable
 }
 
-Function StartShutTime{
-$startstop = Get-EventLog System -After (Get-Date).AddDays(-30)
+
+Function StartShutTime ($days){
+
+$startstop = Get-EventLog System -After (Get-Date).AddDays(-$days) | Where-Object { $_.EventID -in 6005, 6006}
 
 $StartStopTable = @()
 for ($i=0; $i -lt $startstop.Count; $i++){
@@ -35,16 +37,11 @@ if($startstop[$i].EventId -eq 6005) {$event="Startup"}
 if($startstop[$i].EventId -eq 6006) {$event="Shutdown"}
 
 $StartStopTable += [pscustomobject]@{"Time" = $startstop[$i].TimeGenerated; `
-                                       "Id" = $loginouts[$i].EventID; `
+                                       "Id" = $startstop[$i].EventID; `
                                     "Event" = $event;
                                      "User" = "System"                   
                                      }
 
+}
 return $StartStopTable
 }
-}
-
-
-
-#LoginEvent(30)
-StartShutTime
