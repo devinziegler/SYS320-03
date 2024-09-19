@@ -1,15 +1,15 @@
 ﻿# Get-EventLog System -source Microsoft-Windows-winlogon
 
-$loginoutes = Get-EventLog System -source Microsoft-Windows-winlogon -After (Get-Date).AddDays(-14)
+$loginouts = Get-EventLog System -source Microsoft-Windows-winlogon -After (Get-Date).AddDays(-14)
 
-$loginoutesTable = @()
+$loginoutsTable = @()
 for ($i=0; $i -lt $loginouts.Count; $i++){
 
 $event = ""
-if(loginouts[$i].EventId -eq 7001) {$event="Logon"}
-if(loginouts[$i].EventId -eq 7002) {$event="Logoff"}
+if($loginouts[$i].EventId -eq 7001) {$event="Logon"}
+if($loginouts[$i].EventId -eq 7002) {$event="Logoff"}
 
-$user = $loginouts[$i].ReplacementStrings[5]
+$user = $loginouts[$i].ReplacementStrings[1]
 
 $loginoutsTable += [pscustomobject]@{"Time" = $loginouts[$i].TimeGenerated; `
                                        "Id" = $loginouts[$i].EventID; `
@@ -19,5 +19,5 @@ $loginoutsTable += [pscustomobject]@{"Time" = $loginouts[$i].TimeGenerated; `
 
 }
 
-$loginoutesTable
+$loginoutsTable
 
