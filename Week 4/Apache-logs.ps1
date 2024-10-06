@@ -1,4 +1,4 @@
-﻿Function Test ($pageVisited, $httpCode, $browserName) { 
+﻿Function findIp ($pageVisited, $httpCode, $browserName) { 
     
     # Parse the access log based on the given HTTP code
     $httpFilter = Get-Content C:\xampp\apache\logs\access.log | Select-String $httpCode 
@@ -8,22 +8,22 @@
     
     # Parse $httpFilter for Ips
     $ips = @()
-    foreach ($line in $httpFilter){
+    foreach ($line in $httpFilter) {
         if ($line -match $pageVisited -and $line -match $browserName) {
-            $address = $regex.Matches($line)
-            foreach ($address in $line) {
-                $getIP += $address.Value
+            foreach ($address in $regex.Matches($line)) {
+                $ips += $address.Value
             }
         }    
     }
 
     $finalAddresses = @()
-    foreach ($ip in $ipsUnorganized) { $ips += [pscustomobject]@{"IP" = $ip }}
+    foreach ($ip in $ips) { $finalAddresses += [pscustomobject]@{"IP" = $ip }}
 
     
 
-# Return IP addresses that have visited the given page with http code and browser name
-return $finalAddresses | Sort-Object IP | Get-Unique
+    # Return IP addresses that have visited the given page with http code and browser name
+    $ipsoftens = $finalAddresses | Where-Object { $_.IP -ilike "10.*"}
+    $counts = $ipsoftens | Group IP
+    return $counts | Select-Object Count, Name
 }
 
-Test -pageVisisted 'index.html' -httpCode '200' -browserName 'chrome'
