@@ -46,15 +46,34 @@ while($operation){
     elseif($choice -eq 3){ 
 
         $name = Read-Host -Prompt "Please enter the username for the new user"
-        $password = Read-Host -AsSecureString -Prompt "Please enter the password for the new user"
+
+        $chkUser = checkUser $name
+        if($chkUser -ne $false) {
+            $password = Read-Host -AsSecureString -Prompt "Please enter the password for the new user"
+            $bstr = [System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($password)
+            $plainpassword = [System.Runtime.InteropServices.Marshal]::PtrToStringAuto($btsr)
+
+            $chkPasswd = checkPassword $plainpassword;
+            if($chkPasswd -ne $false) {
+                Write-Host "User: $name is created." 
+            }
+            else{Write-Host "Password should be more than 5 characters and include at least 1 etc."}
+        }
+        else{
+            Write-Host "user $name already exists."
+        } 
+
+        
 
         # TODO: Create a function called checkUser in Users that: 
         #              - Checks if user a exists. 
         #              - If user exists, returns true, else returns false
+       
         # TODO: Check the given username with your new function.
         #              - If false is returned, continue with the rest of the function
         #              - If true is returned, do not continue and inform the user
         #
+       
         # TODO: Create a function called checkPassword in String-Helper that:
         #              - Checks if the given string is at least 6 characters
         #              - Checks if the given string contains at least 1 special character, 1 number, and 1 letter

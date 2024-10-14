@@ -10,6 +10,14 @@ function getEnabledUsers(){
 
 }
 
+<# ******************************
+# Check User
+****************************** #>
+function checkUser($name) {
+    $users = Get-LocalUser | Where-Object { $_.name -match $name }
+    if($users.Count -eq 1){ return $false }
+    else { return $true }
+}
 
 
 <# ******************************
