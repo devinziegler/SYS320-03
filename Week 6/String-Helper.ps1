@@ -14,15 +14,15 @@ function checkPassword($passwd) {
         Write-Host "Failed Length Test" | Out-String
         return $false
     }
-    elseif($passwd -notcontains '\d') {
+    elseif($passwd -notmatch '\d') {
         Write-Host "Failed Digit Test" | Out-String
         return $false
     }
-    elseif ($passwd -notcontains "*[!@#$%^&*()]*") {
+    elseif ($passwd -notmatch '[!@#$%^&*()]') {
         Write-Host "Failed Special C Test" | Out-String
         return $false
     }
-    elseif ($passwd -notcontains "*[A-Za-Z]*") {
+    elseif ($passwd -notmatch '[A-Za-z]') {
         Write-Host "failed Letter Test" | Out-String
         return $false
     }

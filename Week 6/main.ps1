@@ -50,42 +50,19 @@ while($operation){
         $chkUser = checkUser $name
         if($chkUser -ne $false) {
             $password = Read-Host -AsSecureString -Prompt "Please enter the password for the new user"
-            $bstr = [System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($password)
+            $btsr = [System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($password)
             $plainpassword = [System.Runtime.InteropServices.Marshal]::PtrToStringAuto($btsr)
 
             $chkPasswd = checkPassword $plainpassword;
             if($chkPasswd -ne $false) {
-                Write-Host "User: $name is created." 
+                createAUser $name $password
+                Write-Host "User: $name is created." | Out-String
             }
-            else{Write-Host "Password should be more than 5 characters and include at least 1 etc."}
+            else{Write-Host "Password should be more than 5 characters and include at least 1 etc." | Out-String}
         }
         else{
-            Write-Host "user $name already exists."
+            Write-Host "user $name already exists." | Out-String 
         } 
-
-        
-
-        # TODO: Create a function called checkUser in Users that: 
-        #              - Checks if user a exists. 
-        #              - If user exists, returns true, else returns false
-       
-        # TODO: Check the given username with your new function.
-        #              - If false is returned, continue with the rest of the function
-        #              - If true is returned, do not continue and inform the user
-        #
-       
-        # TODO: Create a function called checkPassword in String-Helper that:
-        #              - Checks if the given string is at least 6 characters
-        #              - Checks if the given string contains at least 1 special character, 1 number, and 1 letter
-        #              - If the given string does not satisfy conditions, returns false
-        #              - If the given string satisfy the conditions, returns true
-        # TODO: Check the given password with your new function. 
-        #              - If false is returned, do not continue and inform the user
-        #              - If true is returned, continue with the rest of the function
-
-        createAUser $name $password
-
-        Write-Host "User: $name is created." | Out-String
     }
 
 
@@ -95,10 +72,14 @@ while($operation){
         $name = Read-Host -Prompt "Please enter the username for the user to be removed"
 
         # TODO: Check the given username with the checkUser function.
-
-        removeAUser $name
-
-        Write-Host "User: $name Removed." | Out-String
+        $chkUser = checkUser $name
+        if($chkUser -ne $true) {
+            removeAUser $name
+            Write-Host "User: $name Removed" | Out-String
+        }
+        else { 
+            Write-Host "User does not exist."
+        }
     }
 
 
@@ -109,10 +90,14 @@ while($operation){
         $name = Read-Host -Prompt "Please enter the username for the user to be enabled"
 
         # TODO: Check the given username with the checkUser function.
-
-        enableAUser $name
-
-        Write-Host "User: $name Enabled." | Out-String
+        $chkUser = checkUser $name
+        if($chkUser -ne $true) {
+            enableAUser $name
+            Write-Host "User: $name Enabled." | Out-String
+        }
+        else {
+            Write-Host "User does not exist."
+        }
     }
 
 
@@ -123,9 +108,14 @@ while($operation){
 
         # TODO: Check the given username with the checkUser function.
 
-        disableAUser $name
-
-        Write-Host "User: $name Disabled." | Out-String
+        $chkUser = checkUser $name
+        if($chkUser -ne $true) {
+            disableAUser $name
+            Write-Host "User: $name Disabled." | Out-String
+        }
+        else {
+            Write-Host "User does not exist."
+        }
     }
 
 
@@ -134,11 +124,19 @@ while($operation){
         $name = Read-Host -Prompt "Please enter the username for the user logs"
 
         # TODO: Check the given username with the checkUser function.
+        $chkUser = checkUser $name
+        if($chkUser -ne $true) {
+            $timeSince = Read-Host -Prompt "Please enter the number of days to search back."
+            $userLogins = getLoginAndOffs $timeSince
 
-        $userLogins = getLogInAndOffs 90
+            Write-Host ($userLogins | Where-Object { $_.User -ilike "*$name"} | Format-Table | Out-String)
+        }
+        else{ 
+            Write-Host "User does not exist."
+        }
         # TODO: Change the above line in a way that, the days 90 should be taken from the user
 
-        Write-Host ($userLogins | Where-Object { $_.User -ilike "*$name"} | Format-Table | Out-String)
+        
     }
 
 
@@ -147,11 +145,16 @@ while($operation){
         $name = Read-Host -Prompt "Please enter the username for the user's failed login logs"
 
         # TODO: Check the given username with the checkUser function.
+        $chkUser = checkUser $name 
+        if ($chkUser -ne $true) {
+            $timeSince = Read-Host -Prompt "Please enter the number to days to search back."
+            $userLogins = getFailedLogins $timeSince
 
-        $userLogins = getFailedLogins 90
-        # TODO: Change the above line in a way that, the days 90 should be taken from the user
-
-        Write-Host ($userLogins | Where-Object { $_.User -ilike "*$name"} | Format-Table | Out-String)
+            Write-Host ($userLogins | Where-Object { $_.User -ilike "*$name"} | Format-Table | Out-String)
+        }
+        else {
+            Write-Host "User does not exist."
+        }  
     }
 
 
