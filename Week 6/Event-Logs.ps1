@@ -64,3 +64,9 @@ function getFailedLogins($timeBack){
 
     return $failedloginsTable
 } # End of function getFailedLogins
+
+<# ******************************
+     List At Risk Users
+****************************** #>
+
+fuction atRiskUsers ($time)

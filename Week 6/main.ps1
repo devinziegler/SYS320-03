@@ -127,7 +127,7 @@ while($operation){
         $chkUser = checkUser $name
         if($chkUser -ne $true) {
             $timeSince = Read-Host -Prompt "Please enter the number of days to search back."
-            $userLogins = getLoginAndOffs $timeSince
+            $userLogins = getLogInAndOffs $timeSince
 
             Write-Host ($userLogins | Where-Object { $_.User -ilike "*$name"} | Format-Table | Out-String)
         }
@@ -157,6 +157,9 @@ while($operation){
         }  
     }
 
+    elseif($choice -eq 9){
+       
+    }
 
     # TODO: Create another choice "List at Risk Users" that
     #              - Lists all the users with more than 10 failed logins in the last <User Given> days.  
