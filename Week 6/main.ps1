@@ -12,7 +12,8 @@ $Prompt += "5 - Enable a User`n"
 $Prompt += "6 - Disable a User`n"
 $Prompt += "7 - Get Log-In Logs`n"
 $Prompt += "8 - Get Failed Log-In Logs`n"
-$Prompt += "9 - Exit`n"
+$prompt += "9 - Get At Risk Users `n"
+$Prompt += "10 - Exit`n"
 
 
 
@@ -25,7 +26,7 @@ while($operation){
     $choice = Read-Host 
 
 
-    if($choice -eq 9){
+    if($choice -eq 10){
         Write-Host "Goodbye" | Out-String
         exit
         $operation = $false 
@@ -158,7 +159,10 @@ while($operation){
     }
 
     elseif($choice -eq 9){
-       
+       $timeSince = Read-Host -Prompt "Please enter the number to days to search back."
+       $userLogins = atRiskUsers $timeSince
+
+       Write-Host $userLogins
     }
 
     # TODO: Create another choice "List at Risk Users" that

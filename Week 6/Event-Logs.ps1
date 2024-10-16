@@ -69,4 +69,21 @@ function getFailedLogins($timeBack){
      List At Risk Users
 ****************************** #>
 
-fuction atRiskUsers ($time)
+function atRiskUsers ($timeBack) {
+
+    $failedLoginTable = Get-EventLog $timeBack
+    $atRiskTable = @()
+
+    foreach($User in $failedLoginsTable) {
+        if($user -gt 9) {
+            $atRiskTable += [pscustomobject]@{
+                "User" = $User
+                "Count" = $atRiskTable[$User.Count]
+            }
+        }
+
+    }
+}
+
+
+
