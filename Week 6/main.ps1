@@ -160,9 +160,9 @@ while($operation){
 
     elseif($choice -eq 9){
        $timeSince = Read-Host -Prompt "Please enter the number to days to search back."
-       $userLogins = atRiskUsers $timeSince
+       $userLogins = getAtRiskUsers $timeSince
 
-       Write-Host $userLogins
+
     }
 
     # TODO: Create another choice "List at Risk Users" that
