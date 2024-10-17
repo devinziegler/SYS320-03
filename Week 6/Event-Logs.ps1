@@ -93,11 +93,11 @@ function getAtRiskUsers($timeBack){
                                         }
 
     }
-    $countFails = $failedloginsTable | Group-Object -Property User | Where-Object { $_.Count -gt 1 }
+    $countFails = $failedloginsTable | Group-Object -Property User | Where-Object { $_.Count -gt 10 }
     
     $atRiskUsers = @()
-    foreach ($group in $countLogins) {
-        $atRiskUser +=$group.Group
+    foreach ($group in $countFails) {
+        $atRiskUser += $group.Group
     }
 
     return $atRiskUsers

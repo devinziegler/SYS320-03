@@ -152,6 +152,7 @@ while($operation){
             $userLogins = getFailedLogins $timeSince
 
             Write-Host ($userLogins | Where-Object { $_.User -ilike "*$name"} | Format-Table | Out-String)
+            
         }
         else {
             Write-Host "User does not exist."
@@ -159,20 +160,17 @@ while($operation){
     }
 
     elseif($choice -eq 9){
-       $timeSince = Read-Host -Prompt "Please enter the number to days to search back."
-       $userLogins = getAtRiskUsers $timeSince
-       Write-Host $userLogins
+        $timeSince = Read-Host -Prompt "Please enter the number to days to search back."
+        $userLogins = getFailedLogins $timeSince
+
+        $groupUsers = $userLogins | Group-Object -Property User
+        Write-Host $groupUsers | Select-Object Name, Count
 
     }
 
-    # TODO: Create another choice "List at Risk Users" that
-    #              - Lists all the users with more than 10 failed logins in the last <User Given> days.  
-    #                (You might need to create some failed logins to test)
-    #              - Do not forget to update prompt and option numbers
-    
-    # TODO: If user enters anything other than listed choices, e.g. a number that is not in the menu   
-    #       or a character that should not be accepted. Give a proper message to the user and prompt again.
-    
+    elseif($choice -notmatch '^[0 - 9]$') {
+        Write-Host "Enter a listed option"
+    }
 
 }
 
