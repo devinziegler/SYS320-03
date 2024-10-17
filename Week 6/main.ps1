@@ -161,10 +161,13 @@ while($operation){
 
     elseif($choice -eq 9){
         $timeSince = Read-Host -Prompt "Please enter the number to days to search back."
-        $userLogins = getFailedLogins $timeSince
-
-        $groupUsers = $userLogins | Group-Object -Property User
-        Write-Host $groupUsers | Select-Object Name, Count
+        $atRiskUsers = getAtRiskUsers $timeSince
+        if ($atRiskUsers.Count -eq 0) {
+            Write-Output "There are not at risk users."
+        }
+        else{
+            $atRiskUsers | Format-Table | Out-String
+        }
 
     }
 
