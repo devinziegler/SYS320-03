@@ -70,14 +70,16 @@ function getFailedLogins($timeBack){
 ****************************** #>
 
 function getAtRiskUsers($timeBack) {
-    $failedLogins = Get-EventLog security -After (Get-Date).AddDays("-"+"$timeBack") | Where { $_.InstanceID -eq "4625" } 
-    
-    $getUser = $failedLogins | ForEach-Object {
-        $username = $_.Properties[5].Value
-        $username
-    } | Group-Object | Sort-Object Count -Descending
+    $failedLogins = getFailedLogins($timeBack)
 
-    return $getUser | Format-Table Name, Count
+    $countLogins = $failedLogins | Group-Object -Property | Where-Object {$_.Count -gt 9}
+    
+    $atRiskUsers = @()
+    foreach ($group in $countLogins) {
+        $atRiskUser +=$group.Group
+    }
+
+    return $atRiskUsers
 }
 
 
