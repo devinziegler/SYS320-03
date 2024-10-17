@@ -68,11 +68,32 @@ function getFailedLogins($timeBack){
 <# ******************************
      List At Risk Users
 ****************************** #>
+function getAtRiskUsers($timeBack){
+  
+  $failedlogins = Get-EventLog security -After (Get-Date).AddDays("-"+"$timeBack") | Where { $_.InstanceID -eq "4625" }
 
-function getAtRiskUsers($timeBack) {
-    $failedLogins = getFailedLogins($timeBack)
+  $failedloginsTable = @()
+  for($i=0; $i -lt $failedlogins.Count; $i++){
 
-    $countLogins = $failedLogins | Group-Object -Property | Where-Object {$_.Count -gt 9}
+    $account=""
+    $domain="" 
+
+    $usrlines = getMatchingLines $failedlogins[$i].Message "*Account Name*"
+    $usr = $usrlines[1].Split(":")[1].trim()
+
+    $dmnlines = getMatchingLines $failedlogins[$i].Message "*Account Domain*"
+    $dmn = $dmnlines[1].Split(":")[1].trim()
+
+    $user = $dmn+"\"+$usr;
+
+    $failedloginsTable += [pscustomobject]@{"Time" = $failedlogins[$i].TimeGenerated; `
+                                       "Id" = $failedlogins[$i].InstanceId; `
+                                       "Event" = "Failed"; `
+                                       "User" = $user;
+                                        }
+
+    }
+    $countFails = $failedloginsTable | Group-Object -Property User | Where-Object { $_.Count -gt 1 }
     
     $atRiskUsers = @()
     foreach ($group in $countLogins) {
@@ -80,7 +101,5 @@ function getAtRiskUsers($timeBack) {
     }
 
     return $atRiskUsers
+
 }
-
-
-
