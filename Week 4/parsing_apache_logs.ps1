@@ -1,5 +1,5 @@
 ﻿function ApacheLogs1(){
-    $logsNotFormatted = Get-Content C:\xampp\apache\logs\access.log 
+    $logsNotFormatted = Get-Content C:\Users\champuser\Desktop\SYS320-03\Midterm\access.log 
     $tableRecords = @()
 
     for($i=0; $i -lt $logsNotFormatted.Count; $i++) {
