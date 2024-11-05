@@ -20,4 +20,4 @@ function countingCurlAccess() {
 }
 
 countingCurlAccess
-echo"$curlAccess"
+echo "$curlAccess"
