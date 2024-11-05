@@ -15,7 +15,9 @@ function pageCount() {
 	pagesAccessed=$(cat "$file" | cut -d' ' -f7 | tr -d "[" | sort | uniq -c)
 }
 
-pageCount
-echo"$pagesAccessed"
+function countingCurlAccess() {
+	curlAccess=$(cat "$file" | cut -d' ' -f1,12 | tr -d "["| grep "curl" | sort | uniq -c)
+}
 
-
+countingCurlAccess
+echo"$curlAccess"
