@@ -12,15 +12,10 @@ xmlstarlet format --html --recover 2>/dev/null | \
 xmlstarlet select --template --copy-of \
 "//html//body//table//tr")
 
-# Processing HTML with sed
-# 1- Replacing every </tr> with a line break
-# echo "$toolOutput" | \
-#	 sed -n '/<tr>/,/<\/tr/p' | \
-#	 sed 's/<[^>]*>//g' | \
-#	 awk -F'</td>' '{gsub(/.*<td[^>]*>/, "", $1); print $1}' | \
-#	 sed '/^$/d' > IOC.txt
-
-echo "$toolOutput" > troubleshoot.txt
+echo "$toolOutput" | \
+	sed -n 's|<td>\(.*\)</td>|\1|p'| \
+        sed 's/&#13;//g' | \
+	awk 'NR % 2 == 1' > IOC.txt
 
 
 

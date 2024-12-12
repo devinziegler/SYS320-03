@@ -1,16 +1,6 @@
-&#13;
-		Pattern&#13;
-		Description&#13;
-	&#13;
-	&#13;
-		cmd=&#13;
-		Windows reverse shell attempt&#13;
-	&#13;
-	&#13;
-		/bin/sh&#13;
-		Linux shell attempt&#13;
-	&#13;
-	&#13;
-		1=1--&#13;
-		SQL injection attempt&#13;
-	
+		etc/passwd
+		cmd=
+		/bin/bash
+		/bin/sh
+		1=1#
+		1=1--
