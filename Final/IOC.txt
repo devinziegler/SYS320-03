@@ -1,22 +1,16 @@
-<tr>&#13;
-		<th>Pattern</th>&#13;
-		<th>Description</th>&#13;
-	</tr><tr>&#13;
-etc/passwd
-Access attempt to Linux users list
-	</tr><tr>&#13;
-cmd=
-Windows reverse shell attempt
-	</tr><tr>&#13;
-/bin/bash
-Linux shell attempt
-	</tr><tr>&#13;
-/bin/sh
-Linux shell attempt
-	</tr><tr>&#13;
-1=1#
-SQL injection attempt
-	</tr><tr>&#13;
-1=1--
-SQL injection attempt
-	</tr>
+&#13;
+		Pattern&#13;
+		Description&#13;
+	&#13;
+	&#13;
+		cmd=&#13;
+		Windows reverse shell attempt&#13;
+	&#13;
+	&#13;
+		/bin/sh&#13;
+		Linux shell attempt&#13;
+	&#13;
+	&#13;
+		1=1--&#13;
+		SQL injection attempt&#13;
+	
