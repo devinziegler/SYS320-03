@@ -3,7 +3,6 @@
 report="report.txt"
 path="/var/www/html/report.html"
 
-echo "<!DOCTYPE html>" > "$path"
 echo "<html>" >> "$path"
 echo "<head><title> HTML page for report.txt</title></head>" >> "$path"
 echo "<body>" >> "$path"
@@ -15,8 +14,8 @@ while IFS= read -r line; do
 	date=$(echo "$line" | awk '{print $2}' | tr -d '[]')
 	flag=$(echo "$line" | cut -d' ' -f3-)
 
-	echo "<tr><td>$ip</td><td>$date</td><td>$falg</td></tr>" >> "$path"
-done < "$path"
+	echo "<tr><td>$ip</td><td>$date</td><td>$flag</td></tr>" >> "$path"
+done < "$report"
 
 echo "</table>" >> "$path"
 echo "</body>" >> "$path"
