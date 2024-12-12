@@ -15,6 +15,7 @@ xmlstarlet select --template --copy-of \
 echo "$toolOutput" | \
 	sed -n 's|<td>\(.*\)</td>|\1|p'| \
         sed 's/&#13;//g' | \
+	sed 's/^\t*//' | \
 	awk 'NR % 2 == 1' > IOC.txt
 
 
