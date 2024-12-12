@@ -14,16 +14,8 @@ xmlstarlet select --template --copy-of \
 
 # Processing HTML with sed
 # 1- Replacing every </tr> with a line break
- echo "$toolOutput" | sed 's/<\/tr>/\n/g' | \
-                     sed -e 's/&amp;//g' | \
-                     sed -e 's/<tr>//g' | \
-                     sed -e 's/<td[^>]*>//g' | \
-                     sed -e 's/<\/td>/;/g' | \
-                     sed -e 's/<[/\]\{0,1\}a[^>]*>//g' | \
-                     sed -e 's/<[/\]\{0,1\}nobr>//g' | \
-		     sed -e 's/&#13;//g' | \
-		     awk  -F';' 'NR > 1 && $1 != "" {print $1}' | \
-		     sed '/^$/d' > IOC.txt
+ echo "$toolOutput" | awk -F'</td>' '{gsub(/.*<td[^>]*>/, "", $1); print $1}' | \
+	 sed '/^$/d' > IOC.txt
 
 
 

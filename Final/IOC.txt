@@ -1,21 +1,22 @@
-		<th>Pattern</th>
-		<th>Description</th>
-	
-		etc/passwd
-		Access attempt to Linux users list
-	
-		cmd=
-		Windows reverse shell attempt
-	
-		/bin/bash
-		Linux shell attempt
-	
-		/bin/sh
-		Linux shell attempt
-	
-		1=1#
-		SQL injection attempt
-	
-		1=1--
-		SQL injection attempt
-	
+<tr>&#13;
+		<th>Pattern</th>&#13;
+		<th>Description</th>&#13;
+	</tr><tr>&#13;
+etc/passwd
+Access attempt to Linux users list
+	</tr><tr>&#13;
+cmd=
+Windows reverse shell attempt
+	</tr><tr>&#13;
+/bin/bash
+Linux shell attempt
+	</tr><tr>&#13;
+/bin/sh
+Linux shell attempt
+	</tr><tr>&#13;
+1=1#
+SQL injection attempt
+	</tr><tr>&#13;
+1=1--
+SQL injection attempt
+	</tr>
