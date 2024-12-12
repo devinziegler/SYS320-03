@@ -20,8 +20,10 @@ xmlstarlet select --template --copy-of \
                      sed -e 's/<td[^>]*>//g' | \
                      sed -e 's/<\/td>/;/g' | \
                      sed -e 's/<[/\]\{0,1\}a[^>]*>//g' | \
-                     sed -e 's/<[/\]\{0,1\}nobr>//g' \
-		      > IOC.txt
+                     sed -e 's/<[/\]\{0,1\}nobr>//g' | \
+		     sed -e 's/&#13;//g' | \
+		     awk  -F';' 'NR > 1 && $1 != "" {print $1}' | \
+		     sed '/^$/d' > IOC.txt
 
 
 
